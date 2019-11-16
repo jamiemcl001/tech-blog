@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "deploy": "jekyll build && gh-pages -d _site",
+    "deploy": "jekyll build && cp CNAME _site && gh-pages -d _site",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
