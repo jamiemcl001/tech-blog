@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tech thoughts</title>
+    <title>Jamie McLeish's Blog - Tech Ramblings</title>
     <description>A blog to house all of the tech thoughts running around my head</description>
     <link>https://type-jekyll.aspirethemes.com//</link>
     <atom:link href="https://type-jekyll.aspirethemes.com//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 16 Nov 2019 13:05:10 +0000</pubDate>
-    <lastBuildDate>Sat, 16 Nov 2019 13:05:10 +0000</lastBuildDate>
+    <pubDate>Sat, 16 Nov 2019 13:08:43 +0000</pubDate>
+    <lastBuildDate>Sat, 16 Nov 2019 13:08:43 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
 
     
