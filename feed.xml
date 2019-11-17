@@ -5,8 +5,8 @@
     <description>A blog to house all of the tech thoughts running around my head</description>
     <link>https://type-jekyll.aspirethemes.com//</link>
     <atom:link href="https://type-jekyll.aspirethemes.com//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 17 Nov 2019 20:36:00 +0000</pubDate>
-    <lastBuildDate>Sun, 17 Nov 2019 20:36:00 +0000</lastBuildDate>
+    <pubDate>Sun, 17 Nov 2019 20:37:44 +0000</pubDate>
+    <lastBuildDate>Sun, 17 Nov 2019 20:37:44 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
 
     
@@ -170,9 +170,9 @@ e4a73515163c        alpine                 &lt;span class=&quot;s2&quot;&gt;&quo
 3e682b2adb74        sample-node            &lt;span class=&quot;s2&quot;&gt;&quot;node server.js&quot;&lt;/span&gt;         7 hours ago         Up 7 hours          8080/tcp               sample-node
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;As we can tell from the output above, we have both containers running as expected, and we can move on to try executing commands within these containers. We can gain access to them by using the name we defined in &lt;code class=&quot;highlighter-rouge&quot;&gt;container_name&lt;/code&gt; for each object. As such - lets gain access to the default shell in the &lt;code class=&quot;highlighter-rouge&quot;&gt;alpine&lt;/code&gt; image, just to check that we can resolve the server as expected:&lt;/p&gt;
+&lt;p&gt;As we can tell from the output above, we have both containers running as expected, and we can move on to try executing commands within these containers. We can gain access to them by using the name we defined in &lt;code class=&quot;highlighter-rouge&quot;&gt;container_name&lt;/code&gt; for each object. As such - lets gain access to the default shell in the &lt;code class=&quot;highlighter-rouge&quot;&gt;alpinetest&lt;/code&gt; image, just to check that we can resolve the server as expected:&lt;/p&gt;
 
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-ti&lt;/span&gt; sample-node /bin/sh
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-ti&lt;/span&gt; alpinetest /bin/sh
 apk add curl
 curl sample-node:8080/say-hello?name&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;John
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
