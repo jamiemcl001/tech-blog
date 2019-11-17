@@ -149,16 +149,16 @@ version: "3.7"
 
 services:
     sample-node:
-    image: sample-node
-    container_name: sample-node
-    networks:
-        - default
+        image: sample-node
+        container_name: sample-node
+        networks:
+            - default
     alpine:
-    image: alpine
-    container_name: alpinetest
-    depends_on:
-        - sample-node
-    tty: true
+        image: alpine
+        container_name: alpinetest
+        depends_on:
+            - sample-node
+        tty: true
     networks:
         - default
 
@@ -174,10 +174,10 @@ e4a73515163c        alpine                 "/bin/sh"                7 hours ago 
 3e682b2adb74        sample-node            "node server.js"         7 hours ago         Up 7 hours          8080/tcp               sample-node
 ```
 
-As we can tell from the output above, we have both containers running as expected, and we can move on to try executing commands within these containers. We can gain access to them by using the name we defined in `container_name` for each object. As such - lets gain access to the default shell in the `alpine` image, just to check that we can resolve the server as expected:
+As we can tell from the output above, we have both containers running as expected, and we can move on to try executing commands within these containers. We can gain access to them by using the name we defined in `container_name` for each object. As such - lets gain access to the default shell in the `alpinetest` image, just to check that we can resolve the server as expected:
 
 ```shell
-docker exec -ti sample-node /bin/sh
+docker exec -ti alpinetest /bin/sh
 apk add curl
 curl sample-node:8080/say-hello?name=John
 ```
