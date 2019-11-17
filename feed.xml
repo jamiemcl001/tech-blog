@@ -5,35 +5,189 @@
     <description>A blog to house all of the tech thoughts running around my head</description>
     <link>https://type-jekyll.aspirethemes.com//</link>
     <atom:link href="https://type-jekyll.aspirethemes.com//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 16 Nov 2019 13:08:43 +0000</pubDate>
-    <lastBuildDate>Sat, 16 Nov 2019 13:08:43 +0000</lastBuildDate>
+    <pubDate>Sun, 17 Nov 2019 18:58:46 +0000</pubDate>
+    <lastBuildDate>Sun, 17 Nov 2019 18:58:46 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
 
     
       <item>
-        <title>Welcome to Jekyll!</title>
-        <description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+        <title>Communicating between Docker Containers, the Host Machine etc.!</title>
+        <description>&lt;p&gt;Hi all,&lt;/p&gt;
 
-&lt;p&gt;Jekyll requires blog post files to be named according to the following format:&lt;/p&gt;
+&lt;p&gt;During our time at work we recently came across an issue when using LocalStack for testing. We had two containers spun up as part of a &lt;code class=&quot;highlighter-rouge&quot;&gt;docker-compose&lt;/code&gt; stack, and needed to be able to communicate between the two containers. After spending some time looking through StackOverflow we realised where we were going wrong. Thus - the inspiration for this blog post (the first on my new tech blog 🎉) was born.&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;YEAR-MONTH-DAY-title.MARKUP&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Rather than using this example throughout the post I’ll simplify it even further to demonstrate. Say, for example, I have a simple Express server running on port 8080 of my local machine. When I make a GET request to the endpoint &lt;code class=&quot;highlighter-rouge&quot;&gt;/say-hello&lt;/code&gt; with a name passed as a query parameter, I want to be nice and say hello to the fine person. But what happens if I want to move the app over to execute on another host machine? Let’s say that we have been developing and running the server on a *NIX based machine and we needed to migrate over to run this on a Windows machine? In this simplistic example we wouldn’t expect to see any problems when we try run our app - but what if we were developing something much more complex than a simple server? We could easily run into issues that may only be encountered in a specific Operating System. So… Docker to the rescue. For anyone that hasn’t played around with Docker as yet, it basically provides users with the ability to run commands/applications in a completely containerised environment - something that should make the different operating systems problem a thing of the past.&lt;/p&gt;
 
-&lt;p&gt;Where &lt;code class=&quot;highlighter-rouge&quot;&gt;YEAR&lt;/code&gt; is a four-digit number, &lt;code class=&quot;highlighter-rouge&quot;&gt;MONTH&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;DAY&lt;/code&gt; are both two-digit numbers, and &lt;code class=&quot;highlighter-rouge&quot;&gt;MARKUP&lt;/code&gt; is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+&lt;p&gt;Listed above is just one of the many advantages of running our applications in a containerised environment - and if we start to run multiple containers alongside each other, we may want to be able to communicate between those - how do we do this? This article covers the following scenarios:&lt;/p&gt;
 
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Communicating with a Docker container from the host machine&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Communicating with the host machine from inside a Docker container&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Communicating with another Docker container from inside a Docker container&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;p&gt;Let’s begin…&lt;/p&gt;
 
-&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;communicating-with-a-docker-container-from-the-host-machine&quot;&gt;&lt;strong&gt;Communicating with a Docker container from the host machine:&lt;/strong&gt;&lt;/h3&gt;
 
+&lt;p&gt;If you clone &lt;a href=&quot;https://github.com/jamiemcl001/say-hello-server&quot;&gt;this repository&lt;/a&gt;, and run the command &lt;code class=&quot;highlighter-rouge&quot;&gt;docker build -t sample-node .&lt;/code&gt;, you will be able to run a container with this image. We will be using this image throughout the course of this blog post. Running the image in a newly constructed container is simple with the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; 8080:8080 sample-node
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The magic behind being able to connect to this container is the &lt;code class=&quot;highlighter-rouge&quot;&gt;-p 8080:8080&lt;/code&gt; parameter. When used, this parameter will automatically map port 8080 of the docker container to port 8080 on your local machine. If you would rather use the standard port 80 to make requests then you could use the parameter, such as &lt;code class=&quot;highlighter-rouge&quot;&gt;-p 80:8080&lt;/code&gt;. This will map port 80 of your localhost to port 8080 of the docker container.&lt;/p&gt;
+
+&lt;p&gt;With the previous commands being run - the local machine should be able to communicate directly with the docker host using the &lt;code class=&quot;highlighter-rouge&quot;&gt;localhost&lt;/code&gt; name. Running &lt;code class=&quot;highlighter-rouge&quot;&gt;curl localhost:8080/say-hello?name=John&lt;/code&gt; should result in you seeing &lt;code class=&quot;highlighter-rouge&quot;&gt;Hello, John&lt;/code&gt; in the terminal. Hooray!&lt;/p&gt;
+
+&lt;h3 id=&quot;communicating-with-the-host-machine-from-inside-a-docker-container&quot;&gt;&lt;strong&gt;Communicating with the host machine from inside a Docker container:&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Unfortunately this way is much more tricky and not standard between different operating systems, although the use cases for it are more limited than, say, container &amp;lt;-&amp;gt; container communication and host machine -&amp;gt; container communication. I’ll detail the technique required for OSX, as this is what I readily have access to, although I will update with a technique for Linux and Windows in due course.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Working with OSX&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Docker can automatically resolve the hostname &lt;code class=&quot;highlighter-rouge&quot;&gt;docker.for.mac.host.internal&lt;/code&gt; when we run containers using the default bridge network. As such I can run the following command:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run -ti alpine /bin/sh
+apk add curl
+curl docker.for.mac.host.internal:8080/say-hello?name=John
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If I want to do the same but with an easier to remember hostname (remembering to type out &lt;code class=&quot;highlighter-rouge&quot;&gt;docker.for.mac.host.internal&lt;/code&gt; every time could become quite cumbersome then I can execute the following command to provide the hostname &lt;code class=&quot;highlighter-rouge&quot;&gt;local&lt;/code&gt; instead.&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run &lt;span class=&quot;nt&quot;&gt;-ti&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; sample_app &lt;span class=&quot;nt&quot;&gt;--add-host&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;local&lt;/span&gt;:&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;ipconfig getifaddr en0&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt; alpine /bin/sh
+apk add curl
+curl &lt;span class=&quot;nb&quot;&gt;local&lt;/span&gt;:8080/say-hello?name&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;John
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Both examples listed above should result in the response &lt;code class=&quot;highlighter-rouge&quot;&gt;Hello, John!&lt;/code&gt; being shown in the terminal.&lt;/p&gt;
+
+&lt;p&gt;For context, the &lt;code class=&quot;highlighter-rouge&quot;&gt;--add-host&lt;/code&gt; parameter will automatically add a record into the &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/hosts&lt;/code&gt; file of the container. This essentially means that if you use the command &lt;code class=&quot;highlighter-rouge&quot;&gt;--add-host local:192.16.0.2&lt;/code&gt;, then inspect the value of the hosts file - you should see something along the lines of the following:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;127.0.0.1       localhost
+::1     localhost ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+192.16.0.2 &lt;span class=&quot;nb&quot;&gt;local
+&lt;/span&gt;172.17.0.3      3c6f479965ad
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Therefore, when you make requests to &lt;code class=&quot;highlighter-rouge&quot;&gt;local&lt;/code&gt; - the machine will first look in this file - find an associated record for the hostname &lt;code class=&quot;highlighter-rouge&quot;&gt;local&lt;/code&gt; and therefore redirect the request to &lt;code class=&quot;highlighter-rouge&quot;&gt;192.16.0.2&lt;/code&gt; without needing to go to the external network.&lt;/p&gt;
+
+&lt;p&gt;Please note that this is tested using OSX Catalina - unfortunately I don’t have access to an earlier version of OSX to test if the &lt;code class=&quot;highlighter-rouge&quot;&gt;ipconfig getifaddr en0&lt;/code&gt; works as expected, if it doesn’t then please do let me know and I’ll try and document a more reliable method. This command, when executed directly in the terminal will echo the local network’s IP address for your machine. &lt;em&gt;There could be other network interfaces that you may need to check for in order to get this working. If anyone has a nicer way of retrieving the local IP of your machine then please mention them in the comments.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Working with Linux&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Disclaimer: I’ve only tested this with an earlier version of Fedora (Fedora 27 to be exact) but I believe it should work on other Linux based OS’es. If anyone should encounter any issues then please let me know and I’ll update the post with the appropriate method.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Running Docker in Linux seems a little less fiddly than using it with OSX. The reason for this is that the &lt;code class=&quot;highlighter-rouge&quot;&gt;--network host&lt;/code&gt; parameter works as you’d expect it to. If we begin by running our server on our local machine (&lt;code class=&quot;highlighter-rouge&quot;&gt;node src/server.js&lt;/code&gt;), we can then easily allow our future containers to be able to communicate with it. Let’s launch a new container using the super minimal &lt;code class=&quot;highlighter-rouge&quot;&gt;alpine&lt;/code&gt; image.&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run &lt;span class=&quot;nt&quot;&gt;-ti&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--network&lt;/span&gt; host alpine
+apk add curl
+curl localhost:8080/say-hello?name&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;John
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we should see the message &lt;code class=&quot;highlighter-rouge&quot;&gt;Hello John!&lt;/code&gt; echoed back to us. See - much simpler than what we had to go through on OSX.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Working with Windows&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Unfortunately I haven’t had a chance to test the approaches required on Windows. Apologies for this - I’ll check this shortly and update the post with the appropriate method.&lt;/p&gt;
+
+&lt;h3 id=&quot;communicating-with-another-docker-container-from-inside-a-docker-container&quot;&gt;&lt;strong&gt;Communicating with another Docker container from inside a Docker container:&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;There are a few different ways of doing this, and I’ll document my preferred approach: using a custom Docker network.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Using a custom network:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Lets begin by creating a new network in Docker. This post will not go into much detail about how networking works in Docker - although if we simply create a new network we can look at it as creating a sub-network that Docker will manage and allow containers to connect to.&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker network create private_network
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;With this command we have created a private bridge network named &lt;code class=&quot;highlighter-rouge&quot;&gt;private_network&lt;/code&gt; in Docker. Containers that are attached to this network will be able to communicate with each other as if they are on their own private LAN. This is a really nice feature of Docker and something that I’ll definitely be looking further into and discussing in the future.&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--name&lt;/span&gt; sample-node &lt;span class=&quot;nt&quot;&gt;--network&lt;/span&gt; private_network sample-node
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If we deconstruct this command - we are creating a container as we usually would do - but we are also adding the &lt;code class=&quot;highlighter-rouge&quot;&gt;--network private_network&lt;/code&gt; parameter. This tells Docker to attach this newly running container to the private bridge network when it is launched. We can do this by running the command &lt;code class=&quot;highlighter-rouge&quot;&gt;docker network inspect private_network&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;If you look at the output of this command, you should see a lot of the networks internals - but the thing that we are particularly interested in is the &lt;code class=&quot;highlighter-rouge&quot;&gt;Containers&lt;/code&gt; object. This lists any containers that are currently attached to this internal network. At this point we should only see one container listed in this response - our newly created &lt;em&gt;sample-node&lt;/em&gt; container.&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;s2&quot;&gt;&quot;Containers&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s2&quot;&gt;&quot;6ab48ccea7334c0dbc6469f5d0fa78ac9522ef2b806c25dd91beb22792143447&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s2&quot;&gt;&quot;Name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;sample-node&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s2&quot;&gt;&quot;EndpointID&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;...&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s2&quot;&gt;&quot;MacAddress&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;...&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s2&quot;&gt;&quot;IPv4Address&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;172.20.0.2/16&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s2&quot;&gt;&quot;IPv6Address&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This output essentially means that if any other containers should connect to the network - they will also be able to see others connected. We can demonstrate this by launching a throwaway container on the same network (&lt;code class=&quot;highlighter-rouge&quot;&gt;docker run -ti --rm --network private_network alpine /bin/sh&lt;/code&gt;) and pinging &lt;code class=&quot;highlighter-rouge&quot;&gt;172.20.0.2&lt;/code&gt;, seeing the following output:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;PING 172.20.0.2 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;172.20.0.2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: 56 data bytes
+64 bytes from 172.20.0.2: &lt;span class=&quot;nv&quot;&gt;seq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0 &lt;span class=&quot;nv&quot;&gt;ttl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;64 &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0.320 ms
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Docker also allows us to connect to other containers on the same network by their Container ID and their Container name. As a result, this makes it much easier for us to be able to communicate between them. This will mean that the docker bridge will resolve &lt;code class=&quot;highlighter-rouge&quot;&gt;sample-node&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;172.20.0.2&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run &lt;span class=&quot;nt&quot;&gt;-ti&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--network&lt;/span&gt; private_network alpine /bin/sh
+apk add curl
+curl sample-node:8080/say-hello?name&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;John
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And we should see &lt;code class=&quot;highlighter-rouge&quot;&gt;Hello John&lt;/code&gt; in our terminal output! 🎉🎉🎉&lt;/p&gt;
+
+&lt;p&gt;If users wish to use &lt;code class=&quot;highlighter-rouge&quot;&gt;docker-compose&lt;/code&gt; instead of the Docker CLI to construct the containers then I’ll also provide a &lt;code class=&quot;highlighter-rouge&quot;&gt;docker-compose.yml&lt;/code&gt; file that can be used to demonstrate the same approach:&lt;/p&gt;
+
+&lt;div class=&quot;language-docker highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;version: &quot;3.7&quot;
+
+services:
+    sample-node:
+    image: sample-node
+    container_name: sample-node
+    networks:
+        - default
+    alpine:
+    image: alpine
+    container_name: alpinetest
+    depends_on:
+        - sample-node
+    tty: true
+    networks:
+        - default
+
+networks:
+    default:
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Running &lt;code class=&quot;highlighter-rouge&quot;&gt;docker-compose up -d&lt;/code&gt; will start both of these containers and place them onto the same network on launch. Using the empty network object &lt;code class=&quot;highlighter-rouge&quot;&gt;default&lt;/code&gt; empty will create a new bridge network automatically and attach both containers to it on launch, while using the &lt;code class=&quot;highlighter-rouge&quot;&gt;-d&lt;/code&gt; parameter in docker-compose will launch all containers in detached mode. First off lets check that both containers are running as expected with the command &lt;code class=&quot;highlighter-rouge&quot;&gt;docker ps&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                  NAMES
+e4a73515163c        alpine                 &lt;span class=&quot;s2&quot;&gt;&quot;/bin/sh&quot;&lt;/span&gt;                7 hours ago         Up 7 hours                                 alpinetest
+3e682b2adb74        sample-node            &lt;span class=&quot;s2&quot;&gt;&quot;node server.js&quot;&lt;/span&gt;         7 hours ago         Up 7 hours          8080/tcp               sample-node
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;As we can tell from the output above, we have both containers running as expected, and we can move on to try executing commands within these containers. We can gain access to them by using the name we defined in &lt;code class=&quot;highlighter-rouge&quot;&gt;container_name&lt;/code&gt; for each object. As such - lets gain access to the default shell in the &lt;code class=&quot;highlighter-rouge&quot;&gt;alpine&lt;/code&gt; image, just to check that we can resolve the server as expected:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker &lt;span class=&quot;nb&quot;&gt;exec&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-ti&lt;/span&gt; sample-node /bin/sh
+apk add curl
+curl sample-node:8080/say-hello?name&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;John
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And we see our “Hello John” output, as expected! 🤯🤯🤯&lt;/p&gt;
+
+&lt;p&gt;By this point I feel that we’ve got a good enough understanding of how we can communicate between containers, as well as communicating with the host machine as well. This weekend has been eye opening to just how powerful Docker is and how we can use it for more things in our everyday work environment and I’ll certainly be taking the time to learn more about it. I’ll try and ensure that whenever something interesting does crop up - I’ll try and write it up for future reference. I do hope that you found this article interesting and it has given you the opportunity to learn something new about Docker. I look forward to putting together the next blog post for this site.&lt;/p&gt;
+
+&lt;p&gt;Thanks,&lt;/p&gt;
+
+&lt;p&gt;Jamie.&lt;/p&gt;
 </description>
-        <pubDate>Sat, 16 Nov 2019 08:12:24 +0000</pubDate>
-        <link>https://type-jekyll.aspirethemes.com//jekyll/update/2019/11/16/welcome-to-jekyll/</link>
-        <guid isPermaLink="true">https://type-jekyll.aspirethemes.com//jekyll/update/2019/11/16/welcome-to-jekyll/</guid>
+        <pubDate>Sat, 16 Nov 2019 15:39:00 +0000</pubDate>
+        <link>https://type-jekyll.aspirethemes.com//docker,/containers,/networking/2019/11/16/docker-inter-container-communication/</link>
+        <guid isPermaLink="true">https://type-jekyll.aspirethemes.com//docker,/containers,/networking/2019/11/16/docker-inter-container-communication/</guid>
       </item>
     
 
