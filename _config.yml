@@ -16,9 +16,12 @@ github:      'https://github.com/jamiemcl001'
 instagram:   'https://www.instagram.com/jamie_mcleish91/'
 facebook:    'https://www.facebook.com/jamiemcleish'
 
-markdown:  kramdown
-permalink: pretty
-paginate:  10
+markdown:    kramdown
+permalink:   pretty
+paginate:    10
+
+kramdown:
+  input: GFM
 
 sass:
   style: compressed
@@ -26,6 +29,7 @@ sass:
 plugins:
   - jekyll-paginate
   - jekyll/tagging
+  - jekyll-feed
 
 include:
   - _pages
