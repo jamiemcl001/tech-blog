@@ -233,16 +233,16 @@ curl sample-node:8080/say-hello?name<span class="o">=</span>John
 
 services:
     sample-node:
-    image: sample-node
-    container_name: sample-node
-    networks:
-        - default
+        image: sample-node
+        container_name: sample-node
+        networks:
+            - default
     alpine:
-    image: alpine
-    container_name: alpinetest
-    depends_on:
-        - sample-node
-    tty: true
+        image: alpine
+        container_name: alpinetest
+        depends_on:
+            - sample-node
+        tty: true
     networks:
         - default
 

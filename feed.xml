@@ -5,8 +5,8 @@
     <description>A blog to house all of the tech thoughts running around my head</description>
     <link>https://type-jekyll.aspirethemes.com//</link>
     <atom:link href="https://type-jekyll.aspirethemes.com//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 17 Nov 2019 20:26:23 +0000</pubDate>
-    <lastBuildDate>Sun, 17 Nov 2019 20:26:23 +0000</lastBuildDate>
+    <pubDate>Sun, 17 Nov 2019 20:36:00 +0000</pubDate>
+    <lastBuildDate>Sun, 17 Nov 2019 20:36:00 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
 
     
@@ -146,16 +146,16 @@ curl sample-node:8080/say-hello?name&lt;span class=&quot;o&quot;&gt;=&lt;/span&g
 
 services:
     sample-node:
-    image: sample-node
-    container_name: sample-node
-    networks:
-        - default
+        image: sample-node
+        container_name: sample-node
+        networks:
+            - default
     alpine:
-    image: alpine
-    container_name: alpinetest
-    depends_on:
-        - sample-node
-    tty: true
+        image: alpine
+        container_name: alpinetest
+        depends_on:
+            - sample-node
+        tty: true
     networks:
         - default
 
