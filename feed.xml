@@ -3,10 +3,10 @@
   <channel>
     <title>Jamie McLeish's Blog - Tech Ramblings</title>
     <description>A blog to house all of the tech thoughts running around my head</description>
-    <link>https://type-jekyll.aspirethemes.com//</link>
-    <atom:link href="https://type-jekyll.aspirethemes.com//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 17 Nov 2019 20:37:44 +0000</pubDate>
-    <lastBuildDate>Sun, 17 Nov 2019 20:37:44 +0000</lastBuildDate>
+    <link>https://jamiemcl.tech//</link>
+    <atom:link href="https://jamiemcl.tech//feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 18 Nov 2019 23:51:28 +0000</pubDate>
+    <lastBuildDate>Mon, 18 Nov 2019 23:51:28 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
 
     
@@ -186,8 +186,8 @@ curl sample-node:8080/say-hello?name&lt;span class=&quot;o&quot;&gt;=&lt;/span&g
 &lt;p&gt;Jamie.&lt;/p&gt;
 </description>
         <pubDate>Sat, 16 Nov 2019 15:39:00 +0000</pubDate>
-        <link>https://type-jekyll.aspirethemes.com//docker/2019/11/16/docker-inter-container-communication/</link>
-        <guid isPermaLink="true">https://type-jekyll.aspirethemes.com//docker/2019/11/16/docker-inter-container-communication/</guid>
+        <link>https://jamiemcl.tech//docker/2019/11/16/docker-inter-container-communication/</link>
+        <guid isPermaLink="true">https://jamiemcl.tech//docker/2019/11/16/docker-inter-container-communication/</guid>
       </item>
     
 
