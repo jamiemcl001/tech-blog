@@ -10,7 +10,7 @@ title:       Jamie McLeish's Blog - Tech Ramblings
 email:       'jamie@jamiemcl.tech'
 description: 'A blog to house all of the tech thoughts running around my head'
 baseurl:     '' # The subpath of your site, e.g. /blog
-url:         'https://type-jekyll.aspirethemes.com/' # The base hostname & protocol for your site
+url:         'https://jamiemcl.tech/' # The base hostname & protocol for your site
 twitter:     'https://twitter.com/jamie_mcleish'
 github:      'https://github.com/jamiemcl001'
 instagram:   'https://www.instagram.com/jamie_mcleish91/'

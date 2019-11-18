@@ -1,7 +1,8 @@
 ---
 layout: post
-title:  "Communicating between Docker Containers, the Host Machine etc.!"
-date:   2019-11-16 15:39:00 +0000
+title: "Communicating between Docker Containers, the Host Machine etc.!"
+date: 2019-11-16 15:39:00 +0000
+comments: true
 categories: docker
 ---
 Hi all,
