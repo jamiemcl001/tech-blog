@@ -5,6 +5,10 @@
 .c-social-nav {
   &__item {
     display: inline-block;
+
+    a:hover, a:active, a:visited {
+      text-decoration: none;
+    }
   }
 
   &__icon {
