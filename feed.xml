@@ -5,8 +5,8 @@
     <description>A blog to house all of the tech thoughts running around my head</description>
     <link>https://jamiemcl.tech//</link>
     <atom:link href="https://jamiemcl.tech//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 18 Nov 2019 23:51:28 +0000</pubDate>
-    <lastBuildDate>Mon, 18 Nov 2019 23:51:28 +0000</lastBuildDate>
+    <pubDate>Tue, 19 Nov 2019 07:09:10 +0000</pubDate>
+    <lastBuildDate>Tue, 19 Nov 2019 07:09:10 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
 
     
@@ -41,7 +41,7 @@
 
 &lt;h3 id=&quot;communicating-with-the-host-machine-from-inside-a-docker-container&quot;&gt;&lt;strong&gt;Communicating with the host machine from inside a Docker container:&lt;/strong&gt;&lt;/h3&gt;
 
-&lt;p&gt;Unfortunately this way is much more tricky and not standard between different operating systems, although the use cases for it are more limited than, say, container &amp;lt;-&amp;gt; container communication and host machine -&amp;gt; container communication. I’ll detail the technique required for OSX, as this is what I readily have access to, although I will update with a technique for Linux and Windows in due course.&lt;/p&gt;
+&lt;p&gt;Unfortunately this way is much more tricky and not standard between different operating systems, although the use cases for it are more limited than, say, container &amp;lt;-&amp;gt; container communication and host machine -&amp;gt; container communication. Instructions for Windows machines will be added shortly &lt;em&gt;(unfortunately I don’t readily have access to a Windows machine to test)&lt;/em&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Working with OSX&lt;/strong&gt;&lt;/p&gt;
 
