@@ -5,8 +5,8 @@
     <description>A blog to house all of the tech thoughts running around my head</description>
     <link>https://jamiemcl.tech//</link>
     <atom:link href="https://jamiemcl.tech//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 19 Nov 2019 07:09:10 +0000</pubDate>
-    <lastBuildDate>Tue, 19 Nov 2019 07:09:10 +0000</lastBuildDate>
+    <pubDate>Tue, 19 Nov 2019 07:39:23 +0000</pubDate>
+    <lastBuildDate>Tue, 19 Nov 2019 07:39:23 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
 
     
@@ -16,7 +16,9 @@
 
 &lt;p&gt;During our time at work we recently came across an issue when using LocalStack for testing. We had two containers spun up as part of a &lt;code class=&quot;highlighter-rouge&quot;&gt;docker-compose&lt;/code&gt; stack, and needed to be able to communicate between the two containers. After spending some time looking through StackOverflow we realised where we were going wrong. Thus - the inspiration for this blog post (the first on my new tech blog 🎉) was born.&lt;/p&gt;
 
-&lt;p&gt;Rather than using this example throughout the post I’ll simplify it even further to demonstrate. Say, for example, I have a simple Express server running on port 8080 of my local machine. When I make a GET request to the endpoint &lt;code class=&quot;highlighter-rouge&quot;&gt;/say-hello&lt;/code&gt; with a name passed as a query parameter, I want to be nice and say hello to the fine person. But what happens if I want to move the app over to execute on another host machine? Let’s say that we have been developing and running the server on a *NIX based machine and we needed to migrate over to run this on a Windows machine? In this simplistic example we wouldn’t expect to see any problems when we try run our app - but what if we were developing something much more complex than a simple server? We could easily run into issues that may only be encountered in a specific Operating System. So… Docker to the rescue. For anyone that hasn’t played around with Docker as yet, it basically provides users with the ability to run commands/applications in a completely containerised environment - something that should make the different operating systems problem a thing of the past.&lt;/p&gt;
+&lt;p&gt;Rather than using this example throughout the post I’ll simplify it even further to demonstrate. Say, for example, I have a simple Express server running on port 8080 of my local machine. When I make a GET request to the endpoint &lt;code class=&quot;highlighter-rouge&quot;&gt;/say-hello&lt;/code&gt; with a name passed as a query parameter, I want to be nice and say hello to the fine person.&lt;/p&gt;
+
+&lt;p&gt;But what happens if I want to move the app over to execute on another host machine? Let’s say that we have been developing and running the server on a *NIX based machine and we needed to migrate over to run this on a Windows machine? In this simplistic example we wouldn’t expect to see any problems when we try run our app - but what if we were developing something much more complex than a simple server? We could easily run into issues that may only be encountered in a specific Operating System. So… Docker to the rescue. For anyone that hasn’t played around with Docker as yet, it basically provides users with the ability to run commands/applications in a completely containerised environment - something that should make the different operating systems problem a thing of the past.&lt;/p&gt;
 
 &lt;p&gt;Listed above is just one of the many advantages of running our applications in a containerised environment - and if we start to run multiple containers alongside each other, we may want to be able to communicate between those - how do we do this? This article covers the following scenarios:&lt;/p&gt;
 
