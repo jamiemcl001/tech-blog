@@ -5,8 +5,8 @@
     <description>A blog to house all of the tech thoughts running around my head</description>
     <link>https://jamiemcl.tech//</link>
     <atom:link href="https://jamiemcl.tech//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 19 Nov 2019 07:39:23 +0000</pubDate>
-    <lastBuildDate>Tue, 19 Nov 2019 07:39:23 +0000</lastBuildDate>
+    <pubDate>Wed, 20 Nov 2019 22:32:49 +0000</pubDate>
+    <lastBuildDate>Wed, 20 Nov 2019 22:32:49 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
 
     
@@ -195,6 +195,32 @@ curl sample-node:8080/say-hello?name&lt;span class=&quot;o&quot;&gt;=&lt;/span&g
 
     
       
+        
+      
+    
+      
+        
+          <item>
+            <title>Contact Me</title>
+            <description>&lt;!-- modify this form HTML and place wherever you want your form --&gt;
+
+&lt;form action=&quot;https://formspree.io/mjvvzwoj&quot; method=&quot;POST&quot;&gt;
+  &lt;label&gt;
+    Your email:
+    &lt;input type=&quot;text&quot; name=&quot;_replyto&quot; /&gt;
+  &lt;/label&gt;
+  &lt;label&gt;
+    Your message:
+    &lt;textarea name=&quot;message&quot;&gt;&lt;/textarea&gt;
+  &lt;/label&gt;
+
+  &lt;!-- your other form fields go here --&gt;
+
+  &lt;button type=&quot;submit&quot; class=&quot;c-btn&quot;&gt;Send&lt;/button&gt;
+&lt;/form&gt;
+</description>
+            <link>https://jamiemcl.tech//contact.html</link>
+          </item>
         
       
     
