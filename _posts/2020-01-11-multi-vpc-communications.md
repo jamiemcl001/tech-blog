@@ -1,13 +1,13 @@
 ---
 layout: post
-title: "Enabling Multi-Region Restricted Communications with AWS VPC Peering & Route 53 Private Hosted Zones"
+title: "Enabling Multi-Region Communications with AWS VPC Peering & Route 53 Private Hosted Zones"
 date: 2020-01-11 17:42:00 +0000
 comments: true
 categories: awsvpc
 ---
 Hi again,
 
-I've recently encountered another problem when using AWS for my side projects. I have two EC2 instances in different regions, and I want to be able to easily communicate between the two services without assigning public IPs to each of them. To be clear, it's not an actual problem in AWS, but is something that took me a little while to get to grips with, so feel it was worthy of a blog post.
+I've recently encountered another problem when using AWS for my side projects. My problem is that I have two EC2 instances in different regions, and I want to be able to easily communicate between the two services without assigning public IPs to each of them. To be clear, it's not an actual problem in AWS, but is something that took me a little while to get to grips with, so feel it was worthy of a blog post.
 
 I'm conscious of the fact that I want to make this example as easy to follow as possible - so we'll work with the following example:
 
