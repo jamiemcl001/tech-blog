@@ -7,7 +7,7 @@ categories: awsvpc
 ---
 Hi again,
 
-I've recently encountered another problem when using AWS for my side projects. To be clear it's not an actual problem in AWS but I feel that a blog post may help someone in future who is trying to enable restricted communication between VPCs in different regions.
+I've recently encountered another problem when using AWS for my side projects. I have two EC2 instances in different regions, and I want to be able to easily communicate between the two services without assigning public IPs to each of them. To be clear, it's not an actual problem in AWS, but is something that took me a little while to get to grips with, so feel it was worthy of a blog post.
 
 I'm conscious of the fact that I want to make this example as easy to follow as possible - so we'll work with the following example:
 
