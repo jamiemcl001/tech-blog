@@ -5,8 +5,8 @@
     <description>A blog to house all of the tech thoughts running around my head</description>
     <link>https://jamiemcl.tech//</link>
     <atom:link href="https://jamiemcl.tech//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 11 Jan 2020 17:49:09 +0000</pubDate>
-    <lastBuildDate>Sat, 11 Jan 2020 17:49:09 +0000</lastBuildDate>
+    <pubDate>Sat, 11 Jan 2020 17:52:23 +0000</pubDate>
+    <lastBuildDate>Sat, 11 Jan 2020 17:52:23 +0000</lastBuildDate>
     <generator>Jekyll v3.6.3</generator>
 
     
@@ -14,7 +14,7 @@
         <title>Enabling Multi-Region Restricted Communications with AWS VPC Peering &amp; Route 53 Private Hosted Zones</title>
         <description>&lt;p&gt;Hi again,&lt;/p&gt;
 
-&lt;p&gt;I’ve recently encountered another problem when using AWS for my side projects. To be clear it’s not an actual problem in AWS but I feel that a blog post may help someone in future who is trying to enable restricted communication between VPCs in different regions.&lt;/p&gt;
+&lt;p&gt;I’ve recently encountered another problem when using AWS for my side projects. I have two EC2 instances in different regions, and I want to be able to easily communicate between the two services without assigning public IPs to each of them. To be clear, it’s not an actual problem in AWS, but is something that took me a little while to get to grips with, so feel it was worthy of a blog post.&lt;/p&gt;
 
 &lt;p&gt;I’m conscious of the fact that I want to make this example as easy to follow as possible - so we’ll work with the following example:&lt;/p&gt;
 
